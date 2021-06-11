@@ -43,7 +43,7 @@ public class Tree {
 		}
 	}
 
-	public List<Integer> bfsPreOrder(TreeNode root) {
+	public List<Integer> breadthFirstSearch(TreeNode root) {
 		List<Integer> list = new ArrayList<>();
 		Queue<TreeNode> queue = new LinkedList<>();
 		queue.add(root);
@@ -63,16 +63,63 @@ public class Tree {
 		return list;
 	}
 
+	public List<Integer> dfsPreOrder(TreeNode root, List<Integer> list) {
+
+		list.add(root.val);
+
+		if (root.left != null) {
+			dfsPreOrder(root.left, list);
+		}
+
+		if (root.right != null) {
+			dfsPreOrder(root.right, list);
+		}
+
+		return list;
+	}
+
+	public List<Integer> dfsInOrder(TreeNode root, List<Integer> list) {
+
+		if (root.left != null) {
+			dfsInOrder(root.left, list);
+		}
+
+		list.add(root.val);
+
+		if (root.right != null) {
+			dfsInOrder(root.right, list);
+		}
+		return list;
+	}
+
+	public List<Integer> dfsPostOrder(TreeNode root, List<Integer> list) {
+
+		if (root.left != null) {
+			dfsPostOrder(root.left, list);
+		}
+
+		if (root.right != null) {
+			dfsPostOrder(root.right, list);
+		}
+
+		list.add(root.val);
+		return list;
+	}
+
 	public static void main(String[] args) {
 		Tree tree = new Tree();
 		tree.add(9);
 		tree.add(4);
 		tree.add(6);
 		tree.add(20);
+		tree.add(170);
 		tree.add(15);
 		tree.add(1);
-		
-		System.out.println(Util.stringify(tree.bfsPreOrder(tree.root)));
 
+		Util.print(tree.breadthFirstSearch(tree.root), "breadthFirstSearch");
+
+		Util.print(tree.dfsInOrder(tree.root, new ArrayList<>()), "DFS Inorder");
+		Util.print(tree.dfsPreOrder(tree.root, new ArrayList<>()), "DFS Preorder");
+		Util.print(tree.dfsPostOrder(tree.root, new ArrayList<>()), "DFS PostOrder");
 	}
 }
