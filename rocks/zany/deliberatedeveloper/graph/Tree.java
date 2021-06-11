@@ -43,6 +43,24 @@ public class Tree {
 		}
 	}
 
+	public List<Integer> breadthFirstSearchR(Queue<TreeNode> queue, List<Integer> list) {
+		if (queue.size() > 0) {
+			TreeNode node = queue.remove();
+			list.add(node.val);
+
+			if (node.left != null) {
+				queue.add(node.left);
+			}
+
+			if (node.right != null) {
+				queue.add(node.right);
+			}
+			breadthFirstSearchR(queue, list);
+		}
+
+		return list;
+	}
+
 	public List<Integer> breadthFirstSearch(TreeNode root) {
 		List<Integer> list = new ArrayList<>();
 		Queue<TreeNode> queue = new LinkedList<>();
@@ -117,6 +135,10 @@ public class Tree {
 		tree.add(1);
 
 		Util.print(tree.breadthFirstSearch(tree.root), "breadthFirstSearch");
+
+		Queue<TreeNode> queue = new LinkedList<>();
+		queue.add(tree.root);
+		Util.print(tree.breadthFirstSearchR(queue, new ArrayList<>()), "breadthFirstSearch Recursive");
 
 		Util.print(tree.dfsInOrder(tree.root, new ArrayList<>()), "DFS Inorder");
 		Util.print(tree.dfsPreOrder(tree.root, new ArrayList<>()), "DFS Preorder");
