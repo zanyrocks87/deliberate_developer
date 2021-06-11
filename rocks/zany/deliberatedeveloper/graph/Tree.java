@@ -138,7 +138,7 @@ public class Tree {
 
 		Queue<TreeNode> queue = new LinkedList<>();
 		queue.add(tree.root);
-		Util.print(tree.breadthFirstSearchR(queue, new ArrayList<>()), "breadthFirstSearch Recursive");
+		Util.print(tree.breadthFirstSearch(tree.root), "breadthFirstSearch Recursive");
 
 		Util.print(tree.dfsInOrder(tree.root, new ArrayList<>()), "DFS Inorder");
 		Util.print(tree.dfsPreOrder(tree.root, new ArrayList<>()), "DFS Preorder");
