@@ -7,25 +7,26 @@ import java.util.Queue;
 
 import rocks.zany.deliberatedeveloper.Util;
 
-public class Tree {
-	public TreeNode<Integer> root;
+public class Tree<T extends Comparable<?>> {
+	public TreeNode<T> root;
 
-	public void add(int val) {
-		add(new TreeNode<Integer>(val));
+	public void add(T val) {
+		add(new TreeNode<T>(val));
 	}
 
-	public void add(TreeNode<Integer> node) {
+	public void add(TreeNode<T> node) {
 		if (root == null) {
 			root = node;
 			return;
 		}
 
-		Queue<TreeNode<Integer>> queue = new LinkedList<>();
+		Queue<TreeNode<T>> queue = new LinkedList<>();
 		queue.add(root);
 
 		while (queue.size() > 0) {
-			TreeNode<Integer> parent = queue.remove();
-			if (node.val <= parent.val) {
+			TreeNode<T> parent = queue.remove();
+			// FIXME make the int generic
+			if ((int) node.val <= (int) parent.val) {
 				if (parent.left != null) {
 					queue.add(parent.left);
 				} else {
@@ -43,9 +44,9 @@ public class Tree {
 		}
 	}
 
-	public List<Integer> breadthFirstSearchR(Queue<TreeNode<Integer>> queue, List<Integer> list) {
+	public List<T> breadthFirstSearchR(Queue<TreeNode<T>> queue, List<T> list) {
 		if (queue.size() > 0) {
-			TreeNode<Integer> node = queue.remove();
+			TreeNode<T> node = queue.remove();
 			list.add(node.val);
 
 			if (node.left != null) {
@@ -61,13 +62,13 @@ public class Tree {
 		return list;
 	}
 
-	public List<Integer> breadthFirstSearch(TreeNode<Integer> root) {
-		List<Integer> list = new ArrayList<>();
-		Queue<TreeNode<Integer>> queue = new LinkedList<>();
+	public List<T> breadthFirstSearch(TreeNode<T> root) {
+		List<T> list = new ArrayList<>();
+		Queue<TreeNode<T>> queue = new LinkedList<>();
 		queue.add(root);
 
 		while (queue.size() > 0) {
-			TreeNode<Integer> parent = queue.remove();
+			TreeNode<T> parent = queue.remove();
 			list.add(parent.val);
 
 			if (parent.left != null) {
@@ -81,7 +82,7 @@ public class Tree {
 		return list;
 	}
 
-	public List<Integer> dfsPreOrder(TreeNode<Integer> root, List<Integer> list) {
+	public List<T> dfsPreOrder(TreeNode<T> root, List<T> list) {
 
 		list.add(root.val);
 
@@ -96,7 +97,7 @@ public class Tree {
 		return list;
 	}
 
-	public List<Integer> dfsInOrder(TreeNode<Integer> root, List<Integer> list) {
+	public List<T> dfsInOrder(TreeNode<T> root, List<T> list) {
 
 		if (root.left != null) {
 			dfsInOrder(root.left, list);
@@ -110,7 +111,7 @@ public class Tree {
 		return list;
 	}
 
-	public List<Integer> dfsPostOrder(TreeNode<Integer> root, List<Integer> list) {
+	public List<T> dfsPostOrder(TreeNode<T> root, List<T> list) {
 
 		if (root.left != null) {
 			dfsPostOrder(root.left, list);
@@ -125,7 +126,7 @@ public class Tree {
 	}
 
 	public static void main(String[] args) {
-		Tree tree = new Tree();
+		Tree<Integer> tree = new Tree<>();
 		tree.add(9);
 		tree.add(4);
 		tree.add(6);
@@ -133,7 +134,7 @@ public class Tree {
 		tree.add(170);
 		tree.add(15);
 		tree.add(1);
-
+		Util.print(tree.root, "MyTree");
 		Util.print(tree.breadthFirstSearch(tree.root), "breadthFirstSearch");
 
 		Queue<TreeNode<Integer>> queue = new LinkedList<>();

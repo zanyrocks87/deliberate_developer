@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import rocks.zany.deliberatedeveloper.graph.TreeNode;
+
 public class Util {
 
 	public static int[] unsortedArray = new int[] { 4, 5, 78, 8, 78, 1, 34, 3, 500, 678, 345, 454, 5, 6, 7, 456345, 6,
@@ -19,6 +21,11 @@ public class Util {
 		int temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
+	}
+
+	public static void print(TreeNode<Integer> root, String label) {
+		System.out.println("==================" + label + "==================");
+		BTreePrinter.printNode(root);
 	}
 
 	public static void print(int[] array, String label) {
