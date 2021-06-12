@@ -15,12 +15,13 @@
 * At the beginning of Practice session
 	* Review the weak-links(definition below).
 	* Start a timer
-	* Read the question, understand well and draw diagrams.
+	* **Read** the question, understand well and draw diagrams.
 	* Think aloud as you will do in a real interview.
 	* Prepare multiple possible inputs and outputs. This helps to see the pattern.
 	* Consider edge cases.
 	* Ask clarifying questions.
 	* Design the solution and put it in plain English
+	* Run the algorithm by hand, note all the pointers/counters needed. Beginning and end indices.
 	* Use all the hints when stuck.
 	* Check the correctness and Consider Time and space complexity.
 	* Do Dry run and observe what is repeating. See if can be improved. Use hashtable/hashmap.
