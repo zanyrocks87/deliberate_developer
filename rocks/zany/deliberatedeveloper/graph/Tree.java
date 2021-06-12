@@ -1,13 +1,23 @@
 package rocks.zany.deliberatedeveloper.graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import rocks.zany.deliberatedeveloper.Util;
-
 public class Tree<T extends Comparable<?>> {
+
+	class TreeNode<U extends Comparable<?>> {
+		public U val;
+		public TreeNode<U> left;
+		public TreeNode<U> right;
+
+		public TreeNode(U val) {
+			this.val = val;
+		}
+	}
+
 	public TreeNode<T> root;
 
 	public void add(T val) {
@@ -42,6 +52,10 @@ public class Tree<T extends Comparable<?>> {
 				}
 			}
 		}
+	}
+
+	public TreeNode<T> createNode(T val) {
+		return new TreeNode<>(val);
 	}
 
 	public List<T> breadthFirstSearchR(Queue<TreeNode<T>> queue, List<T> list) {
@@ -134,15 +148,125 @@ public class Tree<T extends Comparable<?>> {
 		tree.add(170);
 		tree.add(15);
 		tree.add(1);
-		Util.print(tree.root, "MyTree");
-		Util.print(tree.breadthFirstSearch(tree.root), "breadthFirstSearch");
+		tree.toTree(new Integer[] { 5, 1, 4, null, null, 3, 6 });
+		tree.printNode(tree.root);
 
-		Queue<TreeNode<Integer>> queue = new LinkedList<>();
-		queue.add(tree.root);
-		Util.print(tree.breadthFirstSearch(tree.root), "breadthFirstSearch Recursive");
-
-		Util.print(tree.dfsInOrder(tree.root, new ArrayList<>()), "DFS Inorder");
-		Util.print(tree.dfsPreOrder(tree.root, new ArrayList<>()), "DFS Preorder");
-		Util.print(tree.dfsPostOrder(tree.root, new ArrayList<>()), "DFS PostOrder");
 	}
+
+	public Tree<T> toTree(Integer[] array) {
+
+		int n = array.length;
+
+		Tree<T>.TreeNode<T> rootNode = createNode((T) array[0]);
+		root = rootNode;
+		Queue<Tree<T>.TreeNode<T>> queue = new LinkedList<>();
+		queue.add(rootNode);
+		int i = 1;
+		while (queue.size() > 0) {
+			Tree<T>.TreeNode<T> node = queue.remove();
+			if (i < n) {
+				Integer val = array[i++];
+				if (val != null) {
+					node.left = createNode((T) val);
+					queue.add(node.left);
+				}
+			}
+			if (i < n) {
+				Integer val = array[i++];
+				if (val != null) {
+					node.right = createNode((T) val);
+					queue.add(node.right);
+				}
+			}
+			if (i >= n) {
+				break;
+			}
+		}
+
+		return this;
+	}
+
+	public <T extends Comparable<?>> void printNode(TreeNode<T> root) {
+		int maxLevel = maxLevel(root);
+
+		printNodeInternal(Collections.singletonList(root), 1, maxLevel);
+	}
+
+	private <T extends Comparable<?>> void printNodeInternal(List<TreeNode<T>> nodes, int level, int maxLevel) {
+		if (nodes.isEmpty() || isAllElementsNull(nodes))
+			return;
+
+		int floor = maxLevel - level;
+		int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
+		int firstSpaces = (int) Math.pow(2, (floor)) - 1;
+		int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
+
+		printWhitespaces(firstSpaces);
+
+		List<TreeNode<T>> newNodes = new ArrayList<TreeNode<T>>();
+		for (TreeNode<T> TreeNode : nodes) {
+			if (TreeNode != null) {
+				System.out.print(TreeNode.val);
+				newNodes.add(TreeNode.left);
+				newNodes.add(TreeNode.right);
+			} else {
+				newNodes.add(null);
+				newNodes.add(null);
+				System.out.print(" ");
+			}
+
+			printWhitespaces(betweenSpaces);
+		}
+		System.out.println("");
+
+		for (int i = 1; i <= endgeLines; i++) {
+			for (int j = 0; j < nodes.size(); j++) {
+				printWhitespaces(firstSpaces - i);
+				if (nodes.get(j) == null) {
+					printWhitespaces(endgeLines + endgeLines + i + 1);
+					continue;
+				}
+
+				if (nodes.get(j).left != null)
+					System.out.print("/");
+				else
+					printWhitespaces(1);
+
+				printWhitespaces(i + i - 1);
+
+				if (nodes.get(j).right != null)
+					System.out.print("\\");
+				else
+					printWhitespaces(1);
+
+				printWhitespaces(endgeLines + endgeLines - i);
+			}
+
+			System.out.println("");
+		}
+
+		printNodeInternal(newNodes, level + 1, maxLevel);
+	}
+
+	private void printWhitespaces(int count) {
+		for (int i = 0; i < count; i++)
+			System.out.print(" ");
+	}
+
+	private <T extends Comparable<?>> int maxLevel(TreeNode<T> TreeNode) {
+		if (TreeNode == null)
+			return 0;
+
+		return Math.max(maxLevel(TreeNode.left), maxLevel(TreeNode.right)) + 1;
+	}
+
+	private <T> boolean isAllElementsNull(List<T> list) {
+		for (Object object : list) {
+			if (object != null)
+				return false;
+		}
+
+		return true;
+	}
+
 }
