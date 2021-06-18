@@ -69,6 +69,7 @@
 - [ ] Tries
 - [ ] Segment trees
 - [ ] Fenwick trees
+- [ ] Bit Manipulation
 - [ ] Bitmask
 - [ ] Priority queue
 - [ ] Binary Heaps
@@ -111,6 +112,7 @@
 - [x] Space Complexity
 - [x] Auxiliary Space
 - [ ] For Recursion
+- [ ] Number Theory
 - [ ] For Fibonacci number
 - [ ] Count Digits
 - [ ] Palindrome
