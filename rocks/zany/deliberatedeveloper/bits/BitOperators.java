@@ -5,6 +5,7 @@ public class BitOperators {
 	public static void main(String[] args) {
 
 		System.out.println(convertCase('B'));
+		System.out.println(countSetBits(32));
 
 	}
 
